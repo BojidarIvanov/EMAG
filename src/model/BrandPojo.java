@@ -1,6 +1,5 @@
 package model;
 
-import modelDB.ProductDAO;
 
 public class BrandPojo {
 	
@@ -12,12 +11,21 @@ public class BrandPojo {
 		
 		this.name = name;
 	}
-	
-	public void setId(int id) {
-		this.brandID = id;
+	public BrandPojo(int brandID, String name) {
+		this(name);
+		this.brandID = brandID;
 	}
+	
+	
 	public String getName() {
 		return this.name;
 	}
+	public int getBrandID() {
+		return brandID;
+	}
+	public void setBrandID(int brandID) {
+		this.brandID = brandID;
+	}
+	
 
 }
