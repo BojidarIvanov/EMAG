@@ -49,8 +49,8 @@ public class ProductDAO {
 		rs.next();
 		products.add(new ProductPojo(rs.getInt(1), name,
 				priceBD.toString(), description, categoryId,
-				CategoryDAO.getInstance().getAllCategories().get(rs.getInt("category_id")),
-				BrandDAO.getInstance().getAllBrands().get(rs.getInt("brand_id")), imageUrl));
+				CategoryDAO.getInstance().getAllCategories().get(categoryId),
+				BrandDAO.getInstance().getAllBrands().get(brandId), imageUrl));
 		rs.close();
 		ps.close();
 	}
