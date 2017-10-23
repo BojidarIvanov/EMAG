@@ -5,46 +5,43 @@ public class CategoryPojo {
 	private int categoryID;
 	private String name;
 	private String imageURL;
-	private int parentID;
+	private CategoryPojo parentCategory;
 	
 	public CategoryPojo(String name, String imageURL) {
 		this.name = name;
 		this.imageURL = imageURL;
 	}
 	
-	
-	
-	public CategoryPojo(int categoryID, String name, String imageURL, int parentID) {
+	public CategoryPojo(int categoryID, String name, String imageURL, CategoryPojo parentCategory) {
 		this(name, imageURL);
 		this.categoryID = categoryID;
-		this.parentID = parentID;
+		this.parentCategory = parentCategory;
 	}
 
-
-
-	public void setID(int id) {
-		this.categoryID = id;
-	}
-	public void setParent(int id) {
-		this.parentID = id;
-	}
+		
 	public String getName() {
 		return name;
 	}
 	public String getImageURL() {
 		return imageURL;
 	}
-	public int getParentID() {
-		return parentID;
+	
+	public CategoryPojo getParentCategory() {
+		return parentCategory;
 	}
-
-
+	
+	public void setParentCategory(CategoryPojo categoryPojo) {
+ 
+		this.parentCategory = categoryPojo;
+	}
 
 	public int getCategoryID() {
 		return this.categoryID;
 	}
 
-
+	public void setcategoryID(int id) {
+		this.categoryID = id;
+	}
 
 	@Override
 	public int hashCode() {
@@ -53,11 +50,8 @@ public class CategoryPojo {
 		result = prime * result + categoryID;
 		result = prime * result + ((imageURL == null) ? 0 : imageURL.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + parentID;
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -80,12 +74,10 @@ public class CategoryPojo {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (parentID != other.parentID)
+		if (parentCategory != other.parentCategory)
 			return false;
 		return true;
 	}
-	
-	
-	
 
+	
 }

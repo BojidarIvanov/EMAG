@@ -43,8 +43,6 @@ public class FavouriteProductsDAO {
 		}
 	}
 	
-	
-	
 	public List<ProductPojo> getFavouriteList(int user_id) throws SQLException {
 		
 		Connection con = DBManager.CON1.getConnection();
@@ -56,9 +54,10 @@ public class FavouriteProductsDAO {
 		
 		while (rs.next()) {
 			favProducts.add(new ProductPojo(rs.getInt("product_id"), rs.getString("name"),
-					//quantity is set to zero favorite products may have no quantity they are simply favourite
-					rs.getBigDecimal("price").toString(), rs.getString("description"), 0,
-					rs.getInt("category_id"), rs.getInt("brand_id")));
+					rs.getBigDecimal("price").toString(), rs.getString("description"),
+					rs.getInt("available_products"),
+					CategoryDAO.getInstance().getAllCategories().get(rs.getInt("category_id")),
+					BrandDAO.getInstance().getAllBrands().get(rs.getInt("brand_id")), rs.getString("image_url")));
 		}
 		ps.close();
 		rs.close();
@@ -69,13 +68,13 @@ public class FavouriteProductsDAO {
 	
 	public static void main(String[] args) {
 		System.out.println("Start");
-		ProductPojo p1 = new ProductPojo("SonyVaio", "1000", "Laptop", 100, 1, 1);
-		ProductPojo p2 = new ProductPojo("SonyExperia", "831", "Phone", 99, 1, 1);
+	//	ProductPojo p1 = new ProductPojo("SonyVaio", "1000", "Laptop", 100, 1, 1);
+	//	ProductPojo p2 = new ProductPojo("SonyExperia", "831", "Phone", 99, 1, 1);
 		
 		FavouriteProductsDAO fp = FavouriteProductsDAO.getInstance();
-		try {
-			fp.addProductToFavourites(p1, 1);
-			fp.addProductToFavourites(p2, 2);
+	/*	try {
+		//	fp.addProductToFavourites(p1, 1);
+		//	fp.addProductToFavourites(p2, 2);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -86,7 +85,7 @@ public class FavouriteProductsDAO {
 			System.out.println(fp.getFavouriteList(1));
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}*/
 
 	}
 

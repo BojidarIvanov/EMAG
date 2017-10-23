@@ -2,32 +2,34 @@ package model;
 
 import java.math.BigDecimal;
 
-public class ProductPojo {
+public class ProductPojo implements Comparable<ProductPojo> {
 
-	private long productID;
+	private int productID;
 	private String name;
 	private BigDecimal price;
 	private static final int ROUNDING_MODE = BigDecimal.ROUND_HALF_EVEN;
 	private static final int DECIMALS = 2;
 	private String description;
 	private int quantity;
-	private int catagoryID;
-	private int brandID;
+	private CategoryPojo category;
+	private BrandPojo brand;
+	private String imageURL;
 
-	public ProductPojo(String name, String price, String description, int quantity, int categoryID, int brandID) {
+	public ProductPojo(String name, String price, String description, int quantity, CategoryPojo category, BrandPojo brand, String imageURL) {
 
 		this.name = name;
 		this.price = rounded(new BigDecimal(price));
 		this.description = description;
 		this.quantity = quantity;
-		this.catagoryID = categoryID;
-		this.brandID = brandID;
+		this.category = category;
+		this.brand = brand;
+		this.imageURL = imageURL;
 	}
 
 	// adding constructor for product object with product_id 
-	public ProductPojo(int product_id, String name, String price, String description, int quantity, int categoryID,
-			int brandID) {
-		this(name, price, description, quantity, categoryID, brandID);
+	public ProductPojo(int product_id, String name, String price, String description, int quantity, CategoryPojo category,
+			BrandPojo brand, String imageURL) {
+		this(name, price, description, quantity, category, brand, imageURL);
 		this.productID = product_id;
 	}
 
@@ -78,22 +80,38 @@ public class ProductPojo {
 		return description;
 	}
 
-	public int getCatergoryId() {
-		return catagoryID;
+	public CategoryPojo getCategory() {
+		return category;
 	}
 
-	public int getBrandId() {
-		return brandID;
+	public BrandPojo getBrand() {
+		return brand;
 	}
 
-	public long getProductID() {
+	public int getProductID() {
 		return productID;
 	}
-
+	
+	public int getQuantity() {
+		return quantity;
+	}
+	
+	public void setImageURL(String url) {
+		this.imageURL = url;
+	}
+	
+	public String getImageURL() {
+		return imageURL;
+	}
+	
 	@Override
 	public String toString() {
 		return "ProductPojo [productID=" + productID + ", name=" + name + ", price=" + price + ", description="
-				+ description + ", quantity=" + quantity + ", catagoryID=" + catagoryID + ", brandID=" + brandID + "]";
+				+ description + ", quantity=" + quantity + ", catagory=" + category + ", brand=" + brand + "]";
 	}
 
+	@Override
+	public int compareTo(ProductPojo product) {
+		return this.getProductID()-product.getProductID();
+	}
 }

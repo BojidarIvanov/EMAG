@@ -1,10 +1,12 @@
 package model;
 
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Set;
 
 public class UserPojo {
 	
-	private int custommerID;
+	private int customerID;
 	private String name;
 	private String email;
 	private String phone;
@@ -12,6 +14,7 @@ public class UserPojo {
 	private String password;
 	private String address;
 	private boolean isAdmin;
+	private Set<OrderPojo> orders;
 	
 	public UserPojo(String name, String email, String phone, LocalDate date, String password, String address,
 			boolean isAdmin) {
@@ -23,21 +26,35 @@ public class UserPojo {
 		this.address = address;
 		this.isAdmin = isAdmin;
 	}	
-	public UserPojo(int custommerID, String name, String email, String phone, LocalDate dateOfBirth, String password,
+	
+	public UserPojo(int customerID, String name, String email, String phone, LocalDate dateOfBirth, String password,
 			String address, boolean isAdmin) {
 		this(name, email, phone, dateOfBirth, password, address, isAdmin);
-		this.custommerID = custommerID;
-		
+		this.customerID = customerID;
 	}
-
-
+	
+	public UserPojo(String email,  String password) {
+		this("", email, "", LocalDate.now(), password, "", false);
+	}
+	
+	public Set<OrderPojo> getOrders() {
+		return orders;
+	}
+	
+	public void setOrders(Set<OrderPojo> orders) {
+		this.orders = orders;
+	}
+	
+	public void setPassword(String hashedPassword) {
+      this.password = hashedPassword;		
+	}
 
 	public void setId(int id) {
-		this.custommerID = id;
+		this.customerID = id;
 	}
 
-	public int getCustommerID() {
-		return custommerID;
+	public int getCustomerID() {
+		return customerID;
 	}
 
 	public String getName() {
@@ -64,7 +81,7 @@ public class UserPojo {
 		return address;
 	}
 
-	public boolean isAdmin() {
+	public boolean getIsAdmin() {
 		return isAdmin;
 	}
 
@@ -128,16 +145,11 @@ public class UserPojo {
 
 	@Override
 	public String toString() {
-		return "UserPojo [custommerID=" + custommerID + ", name=" + name + ", email=" + email + ", phone=" + phone
+		return "UserPojo [custommerID=" + customerID + ", name=" + name + ", email=" + email + ", phone=" + phone
 				+ ", dateOfBirth=" + dateOfBirth + ", password=" + password + ", address=" + address + ", isAdmin="
 				+ isAdmin + "]";
 	}
 
-	
-
-	
-	
-	
 	
 
 }

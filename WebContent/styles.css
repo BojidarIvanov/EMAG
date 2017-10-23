@@ -1,0 +1,37 @@
+.navi {
+	float: left;
+	margin-top: 40px;
+	margin-left: 10px
+	display: inline;
+}
+
+.left {
+	background-color: #ff0000;
+	float: left;
+	margin-top: 40px;
+	margin-left: 10px
+	display: auto;
+}
+
+
+.header {
+	background-color: #ff0000;
+	height: 100px;
+	border-radius: 10px;
+}
+
+
+.welcome {
+	
+    color: yellow;
+	background-color: #ff0000;
+	float: right;
+	margin-right: 10px
+}
+
+#avatar {
+	float: right;
+	width: 100px;
+	height: 100px;
+	border-radius: 50px;
+}

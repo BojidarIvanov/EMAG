@@ -91,11 +91,4 @@ public class ReviewPojo {
 			return false;
 		return true;
 	}
-
-
-	
-	
-	
-	
-
 }

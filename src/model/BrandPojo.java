@@ -16,7 +16,6 @@ public class BrandPojo {
 		this.brandID = brandID;
 	}
 	
-	
 	public String getName() {
 		return this.name;
 	}
@@ -27,5 +26,4 @@ public class BrandPojo {
 		this.brandID = brandID;
 	}
 	
-
 }

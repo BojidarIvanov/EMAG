@@ -1,0 +1,540 @@
+/* ==========================================================================
+   $Table of Contents
+   ========================================================================== */
+/**
+ * $Variables
+ * $Mixins
+ * $Globals
+ * $Buttons
+ * $Slider
+ * $Animations
+ */
+
+
+
+/* ==========================================================================
+   $Variables
+   ========================================================================== */
+$font-primary: "Signika", sans-serif;
+
+$ease: cubic-bezier(0.6, -0.28, 0.735, 0.045);
+
+
+$gray: 				#E2DFE0;
+$gray--dark: 		#515050;
+$gray--darkest: 	darken($gray--dark, 20%);
+$red: 				#D52223;
+$red--dark: 		#A81112;
+$gold: 				#F7C80C;
+$blue: 				#2C53B7;
+
+$color-text: 						$gray--darkest;
+$color-primary: 					$red;
+$color-primary--dark: 			$red--dark;
+$color-secondary: 				$gray;
+$color-secondary--dark: 		darken($color-secondary, 15%);
+$color-secondary--darker: 		darken($color-secondary--dark, 25%);
+$color-secondary--darkest: 	$gray--darkest;
+$color-tertiary: 					$gold;
+$color-tertiary--dark: 			darken($gold, 10%);
+$color-accent: 					$blue;
+$color-accent--dark:				darken($blue, 10%);
+
+$breakpoints: (
+
+	small: 	450/16 + 0em,
+	medium: 	650/16 + 0em,
+	large: 	800/16 + 0em
+
+);
+
+
+
+
+/* ==========================================================================
+   $Mixins
+   ========================================================================== */
+@mixin mq($breakpoint) {
+
+	@if map-has-key($breakpoints, $breakpoint) {
+
+		// Goes to $breakpoints map and gets the $breakpoint value
+		@media only screen and ( min-width: #{map-get( $breakpoints, $breakpoint )} ) { @content; }
+
+	}
+
+}
+
+@mixin active {
+	
+	&:focus,
+	&:active,
+	&:hover { @content }
+	
+}
+
+%clear {
+	
+	&:before,
+	&:after {
+		content: '';
+		display: table;
+	}
+	
+	&:after { clear: both; }
+	
+}
+
+
+
+
+/* ==========================================================================
+   $Globals
+   ========================================================================== */
+html { box-sizing: border-box; }
+
+*,
+*:before,
+*:after { box-sizing: inherit; }
+
+body {
+	background-color: $color-primary--dark;
+	color: $color-text;
+	font: 1.125em/1.4 $font-primary;
+	margin: 0;
+	padding: 0;
+}
+
+.wrap {
+	@extend %clear;
+	background-color: #fff;
+	max-width: 81%;
+	margin: auto;
+}
+
+h1,
+.h1 {
+	font-size: 3.38em;
+	font-weight: 700;
+	line-height: 1.23;
+	margin: 0.82em 0  0.41em;
+}
+
+h2,
+.h2 {
+	font-size: 2.27em;
+	font-weight: 700;
+	line-height: 1.23;
+	margin: 1.22em 0  0.61em;
+}
+
+h3,
+.h3 {
+	font-size: 1.5em;
+	font-weight: 700;
+	line-height: 1.85;
+	margin: 0.96em 0  0.96em;
+}
+
+h4,
+.h4 {
+	font-size: 1em;
+	font-weight: 700;
+	line-height: 1.4;
+	margin: 1.4em 0 ;
+}
+
+small,
+.small { font-size: 73%; }
+
+p,
+ul,
+ol,
+table { margin: 1.4em 0; }
+
+a {
+	color: $color-text;
+	color: rgba($color-text, 0.6);
+	text-decoration: none;
+	transition: color 0.3s;
+	
+	@include active { color: inherit; }
+	
+}
+
+:focus { outline: 1px dotted $color-accent; }
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+label {
+	font-size: 73%;
+	text-transform: capitalize;
+}
+
+input,
+select,
+textarea {
+	border: 1px solid $color-secondary--dark;
+	border-radius: 0.3em;
+	margin-bottom: 1.4em;
+	max-width: 100%;
+	padding: 0.35em;
+	width: 100%;
+	transition: border-color 0.2s $ease;
+	
+	&:focus,
+	&:active { border-color: $color-accent; }
+	
+}
+
+.grid {
+	list-style: none;
+	letter-spacing: -0.25em;
+	margin: 0;
+	padding: 0 0.5em;
+	
+	> li {
+		display: inline-block;
+		letter-spacing: normal;
+		margin: 0 0 1.4em;
+		padding: 0 0.5em;
+		vertical-align: top;
+	}
+	
+}
+
+@include mq(small) {
+	
+	.grid-sm-2 {
+		
+		> li { width: 50%; }
+		
+	}
+	
+}
+
+@include mq(medium) {
+
+	.grid-md-2 {
+		
+		> li { width: 50%; }
+		
+	}
+	
+	.grid-md-3 {
+		
+		> li { width: 33.33%; }
+		
+	}
+	
+}
+
+
+@include mq(large) {
+	
+	.grid-lg-3 {
+		
+		> li { width: 33.33%; }
+		
+	}
+	
+	.grid-lg-4 {
+		
+		> li { width: 25%; }
+		
+	}
+	
+}
+
+.row {
+	@extend %clear;
+	margin: 0 -0.5em;
+	width: auto;
+}
+
+	.col {
+		float: left;
+		padding: 0 0.5em;
+		width: 100%;
+	}
+
+@include mq(large) {
+	
+	.col-lg-3-4 { width: 75%; }
+	.col-lg-1-4 { width: 25%; }
+	
+}
+
+/* ==========================================================================
+   $Buttons
+   ========================================================================== */
+.btn {
+	border-radius: 0.3em;
+	border: none;
+	box-shadow: 0 0 6px 1px rgba(black, 0.15);
+	color: inherit;
+	cursor: pointer;
+	display: inline-block;
+	font-weight: 700;
+	padding: 0.7em 2.8em;
+	position: relative;
+	text-align: center;
+	transition: all 0.3s;
+	z-index: 1;
+}
+
+.btn-expanded { width: 100%; }
+
+.btn-circle {
+	border-radius: 50em;
+	height: 2.8em;
+	width: 2.8em;
+	padding: 0.7em;
+	
+	@include active { animation: bounceOut 0.4s; }
+
+}
+
+.btn-primary {
+	background-color: $color-primary;
+	color: #FFF;
+	
+	@include active {
+		background-color: $color-primary--dark;
+		color: #FFF;
+	}
+	
+}
+
+.btn-secondary {
+	background-color: #FFF;
+	color: $color-secondary--dark;
+	
+	@include active { color: $color-secondary--darkest; }
+	
+}
+
+
+
+
+/* ==========================================================================
+   $Slider
+   ========================================================================== */
+.slider {
+	position: relative;
+	z-index: 1;	
+}
+
+.owl-carousel {
+	position: relative;
+	width: 100%;
+}
+
+	.owl-wrapper-outer {
+		overflow: hidden;
+		position: relative;
+		width: 100%;
+	}
+
+	.owl-wrapper {
+		display: none;
+		position: relative;
+		transform: translate3d(0);
+		
+			&:after {
+				clear: both;
+				content: '.';
+				display: block;
+				height: 0;
+				line-height: 0;
+				visibility: hidden;
+			}
+		
+	}
+
+	.owl-item {
+		float: left;
+	
+		img { display: block; }
+	
+	}
+
+	.owl-item.active { display: block; }
+
+	.owl-next,
+	.owl-prev {
+		height: 2.8em;
+		width: 2.8em;
+		margin: auto;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		z-index: 10;
+	}
+
+	.owl-prev { left: 0; }
+	.owl-next { right: 0; }
+
+.cat-item { margin: 0.7em 0; }
+
+	.item-header {
+		position: relative;
+		text-align: center;
+	}
+
+		.item-img { display: block; }
+
+		// Will break if no height/width set
+		.item-img-zoom {
+			margin: auto;
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			z-index: 10;
+			opacity: 0;
+		}
+
+	.item-body {
+		background-color: #FFF;
+		padding: 0.7em;
+	}
+
+		.item-title { margin: 0; }
+
+@include mq(large) {
+		
+	.item-img-zoom {
+		opacity: 0;
+		visibility: hidden;
+		
+		.cat-item:hover & {
+			opacity: 1;
+			visibility: visible;
+		}
+		
+	}
+	
+}
+
+.rating-stars {
+	color: $color-tertiary;
+	display: inline-block;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	vertical-align: middle;
+			
+	> li { display: inline; }
+		
+}
+
+.rating-no {
+	color: $color-secondary--darker;
+	vertical-align: middle;
+}
+
+.overlay-bg {
+	background-color: rgba(black, 0.3);
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 100;
+	
+	&.active { animation: fadeIn 0.2s ease-in forwards; }
+	
+}
+
+.overlay-wrap {
+	margin: auto;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 200;
+	max-width: 327px;
+	height: 50%;
+	
+	&.active { animation: fadeIn 0.3s ease-in-out forwards;	}
+	
+}
+
+	.overlay {
+		background-color: #fff;
+		box-shadow: 0 0 8px 1px rgba(black, 0.3);
+	}
+
+	.overlay-close {
+		position: absolute;
+		top: -0.5em;
+		right: -0.5em;
+		z-index: 10;
+	}
+
+.item-preview { @extend %clear; }
+
+	.preview-img {
+		max-width: 327px;
+		margin: auto;
+		width: 100%;
+	}
+
+	.preview-body { padding: 1em;	}
+
+		.preview-title { margin-bottom: 0; }
+
+@media (min-width: 700px) {
+	
+	.overlay-wrap {
+		max-width: 37.44em;
+		position: fixed;
+	}
+	
+	.preview-img { float: left; }
+	
+	.preview-body {
+		float: left;
+		width: 51.4%;
+	}
+	
+}
+
+
+
+
+/* ==========================================================================
+   $Animations
+   ========================================================================== */
+@keyframes bounceOut {
+	
+	0%,
+	40%,
+	60%,
+	80% { transition-timing-function: $ease; }
+	
+	0% { transform: scale3d(1, 1, 1); }
+		
+	40% { transform: scale3d(1.05, 1.05, 1.05); }
+	
+	60% { transform: scale3d(0.8, 0.8, 0.8); }
+	
+	80% { transform: scale3d(1.02, 1.02, 1.02); }
+	
+	100% { transform: scale3d(1, 1, 1); }
+	
+}
+
+@keyframes fadeIn {
+	
+	from { opacity: 0; }
+	
+	to { opacity: 1; }
+	
+}

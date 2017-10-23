@@ -5,19 +5,21 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class OrderPojo {
 
-	private int order_id;
+	private int orderId;
 	private LocalDateTime date;
-	private int user_id;
-	private HashMap<ProductPojo, Integer> products;
+	private int userId;
+	private HashMap<ProductPojo, Integer> currentOrderProducts;
 	private String shippingAddress = "";
 	private String billingAddress = "";
 	private BigDecimal totalPrice;
 	private static final int ROUNDING_MODE = BigDecimal.ROUND_HALF_EVEN;
 	private static final int DECIMALS = 2;
     private int status;
+    private Map<String, Integer> historyForOrderedProducts;
     
 	// constructor for creating an order during user session, the user will be able 
 	// to add products to a collection HashMap, if customer decides to go to a checkout 
@@ -25,19 +27,19 @@ public class OrderPojo {
 	// shipping and billing addresses will handle order submission.
 		
 	// it is important to have date and time to differentiate orders made within one day
-	public OrderPojo(LocalDateTime date, int user_id) {
+	public OrderPojo(LocalDateTime date, int userId) {
 		this.date = date;
-		this.user_id = user_id;
-		this.products = new HashMap<>();
+		this.userId = userId;
+		this.currentOrderProducts = new HashMap<>();
 		this.totalPrice = new BigDecimal("0");
 		this.status = 0;
 	}
 	
 	// a separate constructor for retrieving orders from database
-	public OrderPojo(int order_id, LocalDateTime date, int user_id,
+	public OrderPojo(int orderId, LocalDateTime date, int userId,
 			String shippingAddress, String billingAddress, BigDecimal totalPrice, int status) {
-		this(date,user_id);
-		this.order_id = order_id;
+		this(date,userId);
+		this.orderId = orderId;
 		this.shippingAddress = shippingAddress;
 		this.billingAddress = billingAddress;
 		this.totalPrice = totalPrice;
@@ -45,22 +47,22 @@ public class OrderPojo {
 	}
 
 
-	public void setId(int id) {
-		this.order_id = id;
+	public void setOrderId(int id) {
+		this.orderId = id;
 	}
 
-	public int getID() {
-		return order_id;
+	public int getOrderID() {
+		return orderId;
 	}
 	
 	// method adding products to current order
 	public void addProductToOrder(ProductPojo product) {
 		// products considered equal if their product_id are equal
-		Integer value = products.get(product);
+		Integer value = currentOrderProducts.get(product);
 		if (value != null) {
-			products.put(product, value + 1);
+			currentOrderProducts.put(product, value + 1);
 		} else {
-			products.put(product, 1);
+			currentOrderProducts.put(product, 1);
 		}
 		
 		//adding price of the product to the total amount
@@ -69,7 +71,7 @@ public class OrderPojo {
 	
 	// method removing products from current order
 	public void removeProductFromOrder(ProductPojo product) {
-		products.remove(product);
+		currentOrderProducts.remove(product);
 		//Subtracting the price of the product if customer decides to cancel this product
 		totalPrice.subtract(product.getPrice());
 
@@ -87,18 +89,26 @@ public class OrderPojo {
 		return billingAddress;
 	}
 
-	public LocalDateTime getDateTime() {
+	public LocalDateTime getDate() {
 		return date;
 	}
 
 	public  Map<ProductPojo, Integer> getCollection() {
-		return Collections.unmodifiableMap(products);
+		return Collections.unmodifiableMap(currentOrderProducts);
+	}
+	
+	public void setHistoryForOrderedProducts(HashMap<String, Integer> products) {
+		this.historyForOrderedProducts = products;
+	}
+	
+	public Map<String, Integer> getHistoryForOrderedProducts() {
+		return historyForOrderedProducts;
 	}
 
 
 	@Override
 	public String toString() {
-		return "OrderPojo [order_id=" + order_id + ", date=" + date + ", user_id=" + user_id + ", products=" + products
+		return "OrderPojo [orderId=" + orderId + ", date=" + date + ", user_id=" + userId + ", products=" + currentOrderProducts
 				+ ", totalPrice=" + totalPrice + ", status=" + status + "]";
 	}
 	
