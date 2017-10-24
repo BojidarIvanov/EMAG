@@ -101,6 +101,10 @@ public class DataVerifier extends HttpServlet {
 
 		// Capitalize product name
 		productName = capitalizeParts(productName);
+		
+		int x = 5;
+		
+		
 		System.out.println("The product name " + productName
 				+ "=====================================================================");
 
