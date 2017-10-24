@@ -1,13 +1,10 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.math.BigDecimal; // for prices
 import java.sql.SQLException; // what's thrown when the JDBC operations fail
-import java.util.Enumeration;
 import java.util.TreeSet;
 
-import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +41,7 @@ public class DataVerifier extends HttpServlet {
 	private void verifyUserInputsAndUpdateDB(HttpServletRequest req, HttpServletResponse res) {
 		
 		System.out.println("veriffying user.");
+		String productId = req.getParameter("id");
 		String productName = req.getParameter("name");
 		String price = req.getParameter("price");
 		String description = req.getParameter("description");
@@ -108,7 +106,7 @@ public class DataVerifier extends HttpServlet {
 		System.out.println("The product name " + productName
 				+ "=====================================================================");
 
-		if (req.getParameter("product_id") == null) { // create rather than edit
+		if (productId == null) { // create rather than edit
 			if (productNameInUse(productName, req, res))
 				sendResponse(req, res, "The name '" + productName + "' is already in use.", true);
 			else if (handleCreate(productName, priceBD, description, Integer.parseInt(categoryId),
