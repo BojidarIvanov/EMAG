@@ -1,13 +1,10 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.math.BigDecimal; // for prices
 import java.sql.SQLException; // what's thrown when the JDBC operations fail
-import java.util.Enumeration;
 import java.util.TreeSet;
 
-import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
