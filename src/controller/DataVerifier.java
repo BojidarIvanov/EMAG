@@ -100,12 +100,6 @@ public class DataVerifier extends HttpServlet {
 		// Capitalize product name
 		productName = capitalizeParts(productName);
 		
-		int x = 5;
-		
-		
-		System.out.println("The product name " + productName
-				+ "=====================================================================");
-
 		if (productId == null) { // create rather than edit
 			if (productNameInUse(productName, req, res))
 				sendResponse(req, res, "The name '" + productName + "' is already in use.", true);
